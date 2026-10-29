@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বৃত্তের পরিমিতি MCQ | HM Online Education</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: Arial, "Noto Sans Bengali", sans-serif;
+      background: #f0f4f8;
+      color: #172033;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 720px;
+      margin: auto;
+    }
+    header {
+      background: #123c69;
+      color: white;
+      text-align: center;
+      padding: 22px 12px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+    }
+    header h1 { margin: 0; font-size: 25px; }
+    header p { margin: 5px 0 0; }
+    .info {
+      background: white;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .question {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+    .question h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+    .option {
+      display: block;
+      padding: 9px 11px;
+      margin: 8px 0;
+      border: 1px solid #d5deea;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .option:has(input:checked) {
+      background: #e5f0ff;
+      border-color: #2864b4;
+    }
+    .option input { margin-right: 8px; }
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .submit {
+      width: 100%;
+      background: #176b42;
+      color: white;
+    }
+    .retry {
+      background: #123c69;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
+    }
+    #result {
+      display: none;
+      background: white;
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 18px;
+    }
+    .explanation {
+      background: #f0f7f2;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+    .correct { color: #137333; font-weight: bold; }
+    .wrong { color: #c5221f; font-weight: bold; }
+    footer {
+      text-align: center;
+      padding: 20px 5px;
+      color: #5b6575;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>HM Online Education</h1>
+    <p>বৃত্তের পরিমিতি — MCQ পরীক্ষা</p>
+    <p>SSC গণিত প্রস্তুতি</p>
+  </header>
+
+  <div class="info">
+    মোট প্রশ্ন: ১০টি | প্রতিটি প্রশ্ন: ১ নম্বর
+    <br>প্রয়োজনে π = ২২/৭ ধরবে।
+  </div>
+
+  <div id="quiz"></div>
+
+  <button class="submit" id="submitBtn" onclick="checkAnswers()">
+    উত্তর জমা দিন
+  </button>
+
+  <div id="result"></div>
+
+  <footer>Learn, Practice, Success.</footer>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "একটি বৃত্তের ব্যাসার্ধ ৭ সেমি। পরিধি কত?",
+    options: ["২২ সেমি", "৪৪ সেমি", "১৫৪ সেমি", "৪৯ সেমি"],
+    answer: 1,
+    steps: [
+      "পরিধি = ২πr = ২ × ২২/৭ × ৭",
+      "= ৪৪ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের ব্যাস ১৪ সেমি। পরিধি কত?",
+    options: ["২২ সেমি", "৪৪ সেমি", "৮৮ সেমি", "১৫৪ সেমি"],
+    answer: 1,
+    steps: [
+      "পরিধি = πd = ২২/৭ × ১৪",
+      "= ৪৪ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের ব্যাসার্ধ ৭ সেমি। ক্ষেত্রফল কত?",
+    options: [
+      "৪৪ বর্গ সেমি",
+      "৪৯ বর্গ সেমি",
+      "১৫৪ বর্গ সেমি",
+      "৩০৮ বর্গ সেমি"
+    ],
+    answer: 2,
+    steps: [
+      "ক্ষেত্রফল = πr² = ২২/৭ × ৭²",
+      "= ২২/৭ × ৪৯ = ১৫৪ বর্গ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের ব্যাস ১৪ সেমি। ক্ষেত্রফল কত?",
+    options: [
+      "৪৪ বর্গ সেমি",
+      "১৫৪ বর্গ সেমি",
+      "৩০৮ বর্গ সেমি",
+      "৬১৬ বর্গ সেমি"
+    ],
+    answer: 1,
+    steps: [
+      "ব্যাসার্ধ = ১৪ ÷ ২ = ৭ সেমি",
+      "ক্ষেত্রফল = ২২/৭ × ৭² = ১৫৪ বর্গ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের পরিধি ৮৮ সেমি। ব্যাসার্ধ কত?",
+    options: ["৭ সেমি", "১৪ সেমি", "২৮ সেমি", "৪৪ সেমি"],
+    answer: 1,
+    steps: [
+      "ব্যাসার্ধ = পরিধি ÷ ২π = ৮৮ ÷ (৪৪/৭)",
+      "= ১৪ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের ক্ষেত্রফল ১৫৪ বর্গ সেমি। ব্যাসার্ধ কত?",
+    options: ["১৪ সেমি", "১১ সেমি", "৭ সেমি", "৪৯ সেমি"],
+    answer: 2,
+    steps: [
+      "r² = ক্ষেত্রফল ÷ π = ১৫৪ ÷ (২২/৭) = ৪৯",
+      "r = √৪৯ = ৭ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের ব্যাসার্ধ ৩.৫ সেমি। পরিধি কত?",
+    options: ["১১ সেমি", "২২ সেমি", "৩৮.৫ সেমি", "৪৪ সেমি"],
+    answer: 1,
+    steps: [
+      "পরিধি = ২πr = ২ × ২২/৭ × ৩.৫",
+      "= ২২ সেমি"
+    ]
+  },
+  {
+    q: "একটি অর্ধবৃত্তের ব্যাসার্ধ ৭ সেমি। ব্যাসসহ সম্পূর্ণ সীমানার দৈর্ঘ্য কত?",
+    options: ["২২ সেমি", "২৯ সেমি", "৩৬ সেমি", "৪৪ সেমি"],
+    answer: 2,
+    steps: [
+      "সীমানা = πr + ২r = ২২ + ১৪",
+      "= ৩৬ সেমি"
+    ]
+  },
+  {
+    q: "একটি বৃত্তের ব্যাস ২১ সেমি। পরিধি কত?",
+    options: ["৩৩ সেমি", "৪২ সেমি", "৬৬ সেমি", "১৩৮.৬ বর্গ সেমি"],
+    answer: 2,
+    steps: [
+      "পরিধি = πd = ২২/৭ × ২১",
+      "= ৬৬ সেমি"
+    ]
+  },
+  {
+    q: "১৪ সেমি ব্যাসার্ধের বৃত্তের এক-চতুর্থাংশের ক্ষেত্রফল কত?",
+    options: [
+      "১৫৪ বর্গ সেমি",
+      "৩০৮ বর্গ সেমি",
+      "৬১৬ বর্গ সেমি",
+      "৭৭ বর্গ সেমি"
+    ],
+    answer: 0,
+    steps: [
+      "পূর্ণ ক্ষেত্রফল = ২২/৭ × ১৪² = ৬১৬ বর্গ সেমি",
+      "এক-চতুর্থাংশ = ৬১৬ ÷ ৪ = ১৫৪ বর্গ সেমি"
+    ]
+  }
+];
+
+const quiz = document.getElementById("quiz");
+let submitted = false;
+
+// প্রতিবার পেজ খোলার সময় প্রশ্নের ক্রম এলোমেলো
+questions.sort(() => Math.random() - 0.5);
+
+function renderQuiz() {
+  quiz.innerHTML = "";
+
+  questions.forEach((q, i) => {
+    // প্রতিটি প্রশ্নের অপশনও এলোমেলো
+    const opts = q.options.map((text, index) => ({
+      text,
+      originalIndex: index
+    }));
+
+    opts.sort(() => Math.random() - 0.5);
+    q.shuffledOptions = opts;
+
+    const div = document.createElement("section");
+    div.className = "question";
+    div.id = "question-" + i;
+
+    const title = document.createElement("h3");
+    title.textContent = (i + 1) + ". " + q.q;
+    div.appendChild(title);
+
+    opts.forEach((opt, j) => {
+      const label = document.createElement("label");
+      label.className = "option";
+
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "q" + i;
+      radio.value = opt.originalIndex;
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(
+        String.fromCharCode(2453 + j) + ". " + opt.text
+      ));
+      div.appendChild(label);
+    });
+
+    quiz.appendChild(div);
+  });
+}
+
+function checkAnswers() {
+  if (submitted) return;
+
+  let score = 0;
+  let unanswered = 0;
+
+  questions.forEach((q, i) => {
+    const selected = document.querySelector(
+      'input[name="q' + i + '"]:checked'
+    );
+
+    if (!selected) unanswered++;
+    else if (Number(selected.value) === q.answer) score++;
+  });
+
+  if (unanswered > 0) {
+    const proceed = confirm(
+      unanswered + "টি প্রশ্নের উত্তর দেওয়া হয়নি। তারপরও জমা দেবেন?"
+    );
+    if (!proceed) return;
+  }
+
+  submitted = true;
+
+  questions.forEach((q, i) => {
+    const selected = document.querySelector(
+      'input[name="q' + i + '"]:checked'
+    );
+    const div = document.getElementById("question-" + i);
+
+    div.querySelectorAll("input").forEach(input => {
+      input.disabled = true;
+    });
+
+    const feedback = document.createElement("div");
+    const isCorrect = selected &&
+      Number(selected.value) === q.answer;
+
+    feedback.className = "explanation";
+
+    const status = document.createElement("div");
+    status.className = isCorrect ? "correct" : "wrong";
+    status.textContent = isCorrect
+      ? "সঠিক উত্তর!"
+      : "সঠিক উত্তর: " + q.options[q.answer];
+
+    feedback.appendChild(status);
+
+    q.steps.forEach((step, j) => {
+      const p = document.createElement("p");
+      p.textContent = "ধাপ " + (j + 1) + ": " + step;
+      feedback.appendChild(p);
+    });
+
+    div.appendChild(feedback);
+  });
+
+  const result = document.getElementById("result");
+  result.style.display = "block";
+  result.innerHTML = "";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "আপনার ফলাফল";
+  result.appendChild(heading);
+
+  const scoreText = document.createElement("p");
+  scoreText.textContent = "প্রাপ্ত নম্বর: " + score + " / " + questions.length;
+  result.appendChild(scoreText);
+
+  const percent = document.createElement("p");
+  percent.textContent = "শতকরা নম্বর: " +
+    Math.round(score / questions.length * 100) + "%";
+  result.appendChild(percent);
+
+  const retry = document.createElement("button");
+  retry.className = "retry";
+  retry.textContent = "আবার পরীক্ষা দিন";
+  retry.onclick = () => location.reload();
+  result.appendChild(retry);
+
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("submitBtn").textContent = "পরীক্ষা সম্পন্ন";
+  result.scrollIntoView({ behavior: "smooth" });
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
